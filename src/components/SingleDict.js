@@ -33,5 +33,5 @@ export class SingleDict extends Component {
 }
 
 SingleDict.propTypes = {
-  dictionary: PropTypes.array.isRequired,
+  dictionary: PropTypes.array,
 };

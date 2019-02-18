@@ -1,5 +1,5 @@
 .App {
-
+  list-style-type: none;
 }
 
 .App-header {
@@ -17,4 +17,27 @@
   font-size: calc(8px + 2vmin);
   font-weight: normal;
   margin-bottom: 0;
+}
+
+.Dictionary-list {
+  width: 100%;
+  list-style-type: none;
+  margin-bottom: 1rem;
+}
+
+.Dictionary-list-item {
+  padding: .75rem 1.25rem;
+  margin-bottom: -1px;
+  border: 1px solid rgba(0,0,0,.125);
+}
+
+.Dictionary-list-item:hover {
+  cursor: pointer;
+  background-color: #dee2e6;
+  color: #212529;
+}
+
+.active {
+  background-color: #6c757d;
+  color: white;
 }
