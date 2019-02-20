@@ -57,7 +57,7 @@ export class SingleRow extends Component {
   }
 
   render() {
-    const {editable, domain, range, id, editDisabled} = this.state;
+    const {editable, domain, range, editDisabled} = this.state;
 
     return (
       <tr>

@@ -2,6 +2,7 @@
   "name": "dictionary-manager",
   "version": "0.1.0",
   "private": true,
+  "homepage": "https://alicjaotto.github.io/dictionary-manager/",
   "dependencies": {
     "bootstrap": "^4.3.1",
     "react": "^16.8.2",

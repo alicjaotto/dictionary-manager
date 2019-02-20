@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import {SingleRow} from './SingleRow';
 import { Table, Button, ButtonToolbar, Form, Col, Row } from 'react-bootstrap';
 
@@ -130,8 +129,3 @@ export class NewDictionary extends Component {
     )
   }
 }
-
-NewDictionary.propTypes = {
-  // activeDictionary: PropTypes.array,
-  // newDictionary: PropTypes.bool
-};
