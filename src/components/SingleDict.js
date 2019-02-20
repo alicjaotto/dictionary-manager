@@ -3,10 +3,12 @@ import PropTypes from 'prop-types';
 import {SingleRow} from './SingleRow';
 
 export class SingleDict extends Component {
-
-	state = {
-		dictionary: this.props.dictionary,
-	}
+  constructor(props) {
+    super(props);
+    this.state = {
+      dictionary: this.props.dictionary,
+    };
+  }
 
   render() {
     const {dictionary} = this.state;
@@ -14,7 +16,7 @@ export class SingleDict extends Component {
       const domain = item[0];
       const range = item[1];
       return(
-        <SingleRow domain={domain} range={range}/>
+        <SingleRow key={domain} domain={domain} range={range}/>
       )
     });
 

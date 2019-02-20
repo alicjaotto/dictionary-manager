@@ -13,6 +13,7 @@ code {
     monospace;
 }
 
-ul {
-  list-style-type: none;
+[type='button'],
+[type='button']:hover {
+  -webkit-appearance: none;
 }

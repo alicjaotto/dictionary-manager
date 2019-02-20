@@ -29,6 +29,9 @@
   padding: .75rem 1.25rem;
   margin-bottom: -1px;
   border: 1px solid rgba(0,0,0,.125);
+  background-color: #fff;
+  display: block;
+  width: 100%;
 }
 
 .Dictionary-list-item:hover {
@@ -37,7 +40,23 @@
   color: #212529;
 }
 
+.Dictionary-list-item[disabled] {
+  cursor: not-allowed;
+}
+
+.Dictionary-list-item[disabled]:hover {
+  background-color: #fff;
+}
+
+.Dictionary-view {
+  margin-top: 1rem;
+}
+
 .active {
   background-color: #6c757d;
   color: white;
+}
+
+.btn-toolbar .btn {
+  margin-right: 0.5rem;
 }

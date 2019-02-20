@@ -1,58 +1,61 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import Button from 'react-bootstrap/Button';
 
 export class DictionaryList extends Component {
   constructor(props) {
     super(props);
     this.state = {
       dictionaries: this.props.dictionaries,
-      activeDictionaryId: '',
+      activeDictionaryId: null,
+      newDictionary: this.props.newDictionary
     }
   }
 
-  _showDictionary = (id) => {
-    this.props.sendActiveDictionary(id);
+  componentWillUpdate() {
     this.toggleActiveClass(this.state.activeDictionaryId);
+  }
+
+  showDictionary(id) {
+    this.props.sendActiveDictionary(id);
     this.setState({
       activeDictionaryId: id
-    }, () => console.log(this.state));
+    }, () => console.log());
     this.toggleActiveClass(id);
   }
 
-  addDictionary = () => {
-    this.props.sendNewDictionaryInfo(true);
-  }
-
-  toggleActiveClass = (id) => {
-    if (id !== '') {
-      const active_id = 'list-' + id;
+  toggleActiveClass(id) {
+    const active_id = 'list-' + id;
+    if (id !== null) {
       const element = this.refs[active_id];
       element.classList.toggle('active');
+    } else if (this.state.newDictionary) {
+      const element = this.refs[active_id];
+      console.log(element);
+      element.classList.remove('active');
     }
   }
 
   render() {
     const {dictionaries} = this.state;
-    var dictionaries_values = dictionaries.map((dictionary)=> {
+    var dictionaries_values = dictionaries.map((dictionary, index)=> {
       const name = dictionary.title;
       const list_id = 'list-' + dictionary.id;
+      const key = index;
 
       return(
-        <div ref={list_id} className='Dictionary-list-item' onClick={(event) => this._showDictionary(dictionary.id)}>
+        <button key={key}
+          type='button'
+          disabled={this.props.disabled}
+          ref={list_id}
+          className='Dictionary-list-item' onClick={(event) => this.showDictionary(dictionary.id)}>
           {name}
-        </div>
+        </button>
       )
     });
 
     return (
-      <div>
-        <div className='Dictionary-list'>
-          {dictionaries_values}
-        </div>
-        <div>
-          <Button primary='true' value='add' size='lg' block onClick={(event) => this.addDictionary()}>new dictionary</Button>
-        </div>
+      <div className='Dictionary-list'>
+        {dictionaries_values}
       </div>
     )
   }
@@ -60,4 +63,5 @@ export class DictionaryList extends Component {
 
 DictionaryList.propTypes = {
   dictionaries: PropTypes.array.isRequired,
+  newDictionary: PropTypes.bool,
 };

@@ -5,11 +5,12 @@ import Container from 'react-bootstrap/Container';
 
 class App extends Component {
   render() {
-    var dictionaries = [
+    const dictionaries = [
       {'id': 456, 'title': 'Winter palette', 'dict' : {'Stonegrey' : 'grey', 'Mystic Black': 'anthracite', 'Midnight Silver' : 'silver'}},
       {'id': 323, 'title': 'Autumn palette', 'dict': {'Light Brown': 'grey', 'Ocean Blue': 'blue', 'Moon beige' : 'beige'}},
       {'id': 723, 'title': 'Summer palette', 'dict': {'Happy Orange': 'orange', 'Cherry Red': 'red', 'Shiny yellow' : 'yellow'}}
     ];
+
     return (
       <div className='App'>
         <header className='App-header'>

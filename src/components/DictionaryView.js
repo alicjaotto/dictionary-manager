@@ -1,46 +1,88 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import {SingleDict} from './SingleDict';
+import {SingleRow} from './SingleRow';
+import { Table, Button, ButtonToolbar } from 'react-bootstrap';
 
 export class DictionaryView extends Component {
   constructor(props) {
     super(props);
+
+    this.handleAddRowAction = this.handleAddRowAction.bind(this);
+    this.handleRemoveRowAction = this.handleRemoveRowAction.bind(this);
+
     this.state = {
-      dictionaries: this.props.dictionaries,
+      activeDictionary: this.props.activeDictionary,
       activeDictionaryId: this.props.activeDictionaryId
     }
   }
 
-  onClickCallback = () => {
-    console.log(this.state);
+  handleAddRowAction(event) {
+    const newRow = ['',''];
+    const newDictionary = this.state.activeDictionary;
+    newDictionary.push(newRow);
+    this.setState({
+      activeDictionary: newDictionary
+    });
   }
 
-	render() {
-    const {activeDictionaryId} = this.state;
-    const {dictionaries} = this.state;
-    var dictionary_values = dictionaries.map((dictionary)=> {
-      let id = dictionary.id;
-      if (id === activeDictionaryId) {
-        const dict = new Map(Object.entries(dictionary.dict));
-        const dictio = Array.from(dict);
-        return(
-          <div onClick={this.onClickCallback}>
-            <SingleDict dictionary={dictio}/>
-          </div>
-        )
-      }
-      return
+  handleRemoveRowAction(id) {
+    var dictionary = this.state.activeDictionary;
+    dictionary.splice(id, 1);
+    this.setState({
+      activeDictionary: dictionary
+    });
+  }
+
+  render() {
+    var activeDictionary = this.props.activeDictionary;
+    var {newDictionary} = this.props.newDictionary;
+    var rows = activeDictionary.map((item, index) => {
+      const domain = item[0];
+      const range = item[1];
+      const key = index;
+      return(
+        <SingleRow
+          key={key}
+          id={key}
+          domain={domain}
+          range={range}
+          sendRowToRemoveId={this.handleRemoveRowAction}
+          sendRowData={this.handleRowData}/>
+      )
     });
 
     return (
-      <div>
-        {dictionary_values}
+      <div className='Dictionary-view'>
+        {!newDictionary &&
+          (
+            <Table striped bordered size='sm'>
+              <thead>
+                <tr>
+                  <th>Domain</th>
+                  <th>Range</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                {rows}
+              </tbody>
+            </Table>
+          )
+        }
+        <ButtonToolbar>
+          <Button
+            value='addRow'
+            variant='secondary'
+            onClick={this.handleAddRowAction}>
+            Add row
+          </Button>
+        </ButtonToolbar>
       </div>
     )
   }
 }
 
 DictionaryView.propTypes = {
-  dictionaries: PropTypes.array.isRequired,
-  activeDictionaryId: PropTypes.number.isRequired
+  activeDictionary: PropTypes.array,
+  newDictionary: PropTypes.bool
 };
