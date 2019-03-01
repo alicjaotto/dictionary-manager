@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import {SingleRow} from './SingleRow';
-import { Table, Button, ButtonToolbar, Form, Col, Row } from 'react-bootstrap';
+import {DictionaryModel} from '../models/DictionaryModel';
+import { Table, Button, ButtonToolbar, Form, Col, Row, Alert } from 'react-bootstrap';
 
 export class NewDictionary extends Component {
   constructor(props) {
@@ -13,9 +14,10 @@ export class NewDictionary extends Component {
     this.createNewDictionaryObject = this.createNewDictionaryObject.bind(this);
 
     this.state = {
-      title: '',
-      id: '',
-      dict: []
+      title: null,
+      id: null,
+      dict: [],
+      showAlert: false
     }
   }
 
@@ -44,25 +46,33 @@ export class NewDictionary extends Component {
     });
   }
 
-  createNewDictionaryObject(state) {
-    const properties = ['id', 'title', 'dict'];
-    var newDictionary = {};
-    properties.forEach(function(property) {
-      Object.defineProperty(newDictionary, property, {
-          value: state[property],
-          configurable: true
-      });
-    });
-    return newDictionary;
-  }
+  // createNewDictionaryObject(state) {
+    // const properties = ['id', 'title', 'dict'];
+    // var newDictionary = {};
+    // properties.forEach(function(property) {
+    //   Object.defineProperty(newDictionary, property, {
+    //       value: state[property],
+    //       configurable: true
+    //   });
+    // });
+    // const newDictionary = new DictionaryModel;
+    // return newDictionary;
+  // }
 
   sendNewDictionaryObject() {
-    const newDictionary = this.createNewDictionaryObject(this.state);
-    console.log(newDictionary);
+    if ((this.state.title == null) && (this.state.id == null)) {
+      this.setState({
+        showAlert: true
+      })
+    } else {
+      const newDictionary = new DictionaryModel;
+      console.log(newDictionary);
+    }
   }
 
   render() {
-    const {dict, title, id} = this.state;
+    const handleHide = () => this.setState({ showAlert: false });
+    const {dict, title, id, showAlert} = this.state;
     var rows = dict.map((item, index) => {
       const domain = item[0];
       const range = item[1];
@@ -114,7 +124,7 @@ export class NewDictionary extends Component {
         <ButtonToolbar>
           <Button
             value='addRow'
-            variant='primary'
+            variant='secondary'
             onClick={this.handleAddRowAction}>
             Add row
           </Button>
@@ -124,7 +134,23 @@ export class NewDictionary extends Component {
             variant='primary'>
             Save dictionary
           </Button>
+          <Button
+            onClick={this.sendNewDictionaryObject}
+            value='dismiss'
+            variant='danger'>
+            Dismiss
+          </Button>
         </ButtonToolbar>
+        <Alert show={showAlert} variant="danger">
+            <p>
+              You cannot save dictionary without title and id!
+            </p>
+            <div className="d-flex justify-content-end">
+              <Button onClick={handleHide} variant="outline-danger">
+                X
+              </Button>
+            </div>
+          </Alert>
       </div>
     )
   }

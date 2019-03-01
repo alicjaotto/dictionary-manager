@@ -1,5 +1,5 @@
 .App {
-  list-style-type: none;
+
 }
 
 .App-header {
@@ -14,7 +14,7 @@
 }
 
 .App-title {
-  font-size: calc(8px + 2vmin);
+  font-size: 2rem;
   font-weight: normal;
   margin-bottom: 0;
 }

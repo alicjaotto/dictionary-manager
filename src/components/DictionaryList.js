@@ -2,14 +2,10 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
 export class DictionaryList extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      dictionaries: this.props.dictionaries,
+    state = {
       activeDictionaryId: null,
       newDictionary: this.props.newDictionary
     }
-  }
 
   componentWillUpdate() {
     this.toggleActiveClass(this.state.activeDictionaryId);
@@ -19,49 +15,48 @@ export class DictionaryList extends Component {
     this.props.sendActiveDictionary(id);
     this.setState({
       activeDictionaryId: id
-    }, () => console.log());
+    })
     this.toggleActiveClass(id);
   }
 
   toggleActiveClass(id) {
     const active_id = 'list-' + id;
-    if (id !== null) {
+    if ((!this.state.newDictionary) && (id !== null)) {
       const element = this.refs[active_id];
       element.classList.toggle('active');
     } else if (this.state.newDictionary) {
       const element = this.refs[active_id];
-      console.log(element);
       element.classList.remove('active');
     }
   }
 
   render() {
-    const {dictionaries} = this.state;
+    const {dictionaries} = this.props;
     var dictionaries_values = dictionaries.map((dictionary, index)=> {
       const name = dictionary.title;
       const list_id = 'list-' + dictionary.id;
-      const key = index;
 
       return(
-        <button key={key}
-          type='button'
-          disabled={this.props.disabled}
-          ref={list_id}
-          className='Dictionary-list-item' onClick={(event) => this.showDictionary(dictionary.id)}>
-          {name}
-        </button>
+        <li key={list_id}>
+          <button
+            type='button'
+            disabled={this.props.disabled}
+            ref={list_id}
+            className='Dictionary-list-item' onClick={(event) => this.showDictionary(dictionary.id)}>
+            {name}
+          </button>
+        </li>
       )
     });
 
     return (
-      <div className='Dictionary-list'>
+      <ul className='Dictionary-list'>
         {dictionaries_values}
-      </div>
+      </ul>
     )
   }
 }
 
 DictionaryList.propTypes = {
-  dictionaries: PropTypes.array.isRequired,
-  newDictionary: PropTypes.bool,
+  newDictionary: PropTypes.bool.isRequired
 };
