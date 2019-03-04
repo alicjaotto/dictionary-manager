@@ -1,11 +1,11 @@
 self.__precacheManifest = [
   {
-    "revision": "6677a8714280ee207234",
-    "url": "/dictionary-manager/static/css/main.c7f109b5.chunk.css"
+    "revision": "aeb9290d00ddb72573eb",
+    "url": "/dictionary-manager/static/css/main.66f6991d.chunk.css"
   },
   {
-    "revision": "6677a8714280ee207234",
-    "url": "/dictionary-manager/static/js/main.6677a871.chunk.js"
+    "revision": "aeb9290d00ddb72573eb",
+    "url": "/dictionary-manager/static/js/main.aeb9290d.chunk.js"
   },
   {
     "revision": "473f233394505afc56db",
@@ -16,7 +16,7 @@ self.__precacheManifest = [
     "url": "/dictionary-manager/static/js/2.079e0f9e.chunk.js"
   },
   {
-    "revision": "9baa3845d88b4466e011ed6352fee2f2",
+    "revision": "5723da3898d44dfbec7d4dd1a042355d",
     "url": "/dictionary-manager/index.html"
   }
 ];
