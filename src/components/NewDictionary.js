@@ -11,7 +11,7 @@ export class NewDictionary extends Component {
     this.handleRemoveRowAction = this.handleRemoveRowAction.bind(this);
     this.handleChangeAction = this.handleChangeAction.bind(this);
     this.sendNewDictionaryObject = this.sendNewDictionaryObject.bind(this);
-    this.createNewDictionaryObject = this.createNewDictionaryObject.bind(this);
+    this.handleSaveNewRow = this.handleSaveNewRow.bind(this);
 
     this.state = {
       title: null,
@@ -30,12 +30,12 @@ export class NewDictionary extends Component {
   }
 
   handleAddRowAction(event) {
-    const newRow = ['', ''];
     const newDictionary = this.state.dict;
-    newDictionary.push(newRow);
+    const item = ['', ''];
+    newDictionary.push(item);
     this.setState({
       dict: newDictionary
-    })
+    }, () => console.log(this.state))
   }
 
   handleRemoveRowAction(id) {
@@ -46,18 +46,13 @@ export class NewDictionary extends Component {
     });
   }
 
-  // createNewDictionaryObject(state) {
-    // const properties = ['id', 'title', 'dict'];
-    // var newDictionary = {};
-    // properties.forEach(function(property) {
-    //   Object.defineProperty(newDictionary, property, {
-    //       value: state[property],
-    //       configurable: true
-    //   });
-    // });
-    // const newDictionary = new DictionaryModel;
-    // return newDictionary;
-  // }
+  reduceArrToObject(dictionary) {
+    const result = dictionary.reduce(function(map, arr) {
+      map[arr[0]] = arr[1];
+      return map;
+    }, {});
+    return result;
+  }
 
   sendNewDictionaryObject() {
     if ((this.state.title == null) && (this.state.id == null)) {
@@ -65,9 +60,17 @@ export class NewDictionary extends Component {
         showAlert: true
       })
     } else {
-      const newDictionary = new DictionaryModel;
-      console.log(newDictionary);
+      const newDictionary = new DictionaryModel(this.state);
+      const reducedDict = this.reduceArrToObject(newDictionary.dict);
+      newDictionary.dict = reducedDict;
+      this.props.sendNewDictionary(newDictionary)
     }
+  }
+
+  handleSaveNewRow(domain, range, id) {
+    const row = this.state.dict[id];
+    row[0] = domain;
+    row[1] = range;
   }
 
   render() {
@@ -83,9 +86,11 @@ export class NewDictionary extends Component {
           id={key}
           domain={domain}
           range={range}
-          sendRowToRemoveId={this.handleRemoveRowAction}/>
+          sendRowToRemoveId={this.handleRemoveRowAction}
+          sendNewRow={this.handleSaveNewRow}/>
       )
     });
+    const tableVisible = (dict.length >= 1) ? true : false;
 
     return (
       <div className='Dictionary-view'>
@@ -110,6 +115,7 @@ export class NewDictionary extends Component {
         </Col>
       </Form.Group>
       <Table striped bordered size='sm'>
+        {tableVisible && (
           <thead>
             <tr>
               <th>Domain</th>
@@ -117,6 +123,7 @@ export class NewDictionary extends Component {
               <th>Actions</th>
             </tr>
           </thead>
+        )}
           <tbody>
             {rows}
           </tbody>
@@ -141,16 +148,16 @@ export class NewDictionary extends Component {
             Dismiss
           </Button>
         </ButtonToolbar>
-        <Alert show={showAlert} variant="danger">
-            <p>
-              You cannot save dictionary without title and id!
-            </p>
-            <div className="d-flex justify-content-end">
-              <Button onClick={handleHide} variant="outline-danger">
-                X
-              </Button>
-            </div>
-          </Alert>
+        <div className='Dictionary-view-alert'>
+          <Alert show={showAlert} variant='danger' onClose={handleHide}>
+              <span>
+                You cannot save dictionary without title and id!
+              </span>
+              <span className='Dictionary-view-alert-button' type='button' onClick={handleHide}>
+                x
+              </span>
+            </Alert>
+          </div>
       </div>
     )
   }

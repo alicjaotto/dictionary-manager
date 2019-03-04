@@ -20,6 +20,8 @@ class App extends Component {
 
     this.addDictionary = this.addDictionary.bind(this);
     this.setActiveDictionary = this.setActiveDictionary.bind(this);
+    this.saveNewDictionary = this.saveNewDictionary.bind(this);
+    this.saveChangedDictionary = this.saveChangedDictionary.bind(this);
   }
 
   componentDidMount() {
@@ -35,8 +37,9 @@ class App extends Component {
     this.setState({
       activeDictionaryId: id,
       activeDictionary: activeDictionary,
-      viewVisible: true
-    })
+      viewVisible: true,
+      newDictionary: false
+    }, () => console.log(this.state))
   }
 
   addDictionary(event) {
@@ -44,7 +47,7 @@ class App extends Component {
       newDictionary: true,
       activeDictionaryId: null,
       activeDictionary: []
-    }, () => console.log(this.state));
+    });
   }
 
   findActiveDictionary(id) {
@@ -55,15 +58,38 @@ class App extends Component {
     return activeDictionary;
   }
 
+  saveNewDictionary(dictionary) {
+    if (dictionary == null) {
+      console.log('no value');
+    } else {
+      const newDictId = dictionary.id;
+      const newDictionaries = this.state.dictionaries;
+      newDictionaries.push(dictionary);
+      this.setState({
+        dictionaries: newDictionaries,
+      }, () => console.log(this.state))
+      this.setActiveDictionary(newDictId);
+    }
+  }
+
+  saveChangedDictionary(dictionary) {
+    var editedDictionary = this.state.dictionaries.find(x => x.id === this.state.activeDictionaryId);
+    editedDictionary.dict = dictionary;
+  }
+
   render() {
     const {dictionaries, viewVisible, newDictionary, activeDictionary, activeDictionaryId} = this.state;
 
     return (
       <div className='App'>
         <header className='App-header'>
-          <Container>
-            <h1 className='App-title'>dictionary manager</h1>
-          </Container>
+          <h1 className='App-title'>dictionary manager</h1>
+          <nav className='App-menu'>
+            <ul className='App-menu-nav'>
+              <li className='App-menu-nav-link'>support</li>
+              <li className='App-menu-nav-link'>log out</li>
+            </ul>
+          </nav>
         </header>
         <Container>
           <Row>
@@ -72,7 +98,8 @@ class App extends Component {
                 disabled={newDictionary}
                 dictionaries={dictionaries}
                 sendActiveDictionary={this.setActiveDictionary}
-                newDictionary = {newDictionary}/>
+                newDictionary={newDictionary}
+                activeDictionaryId={activeDictionaryId}/>
               <div>
                 <Button
                   disabled={newDictionary}
@@ -90,11 +117,12 @@ class App extends Component {
                 (<DictionaryView
                     key={activeDictionaryId}
                     activeDictionary={activeDictionary}
-                    newDictionary={newDictionary}/>
+                    newDictionary={newDictionary}
+                    sendChangedDictionary={this.saveChangedDictionary}/>
                 )
               }
               {newDictionary &&
-                (<NewDictionary/>)
+                (<NewDictionary sendNewDictionary={this.saveNewDictionary}/>)
               }
             </Col>
           </Row>

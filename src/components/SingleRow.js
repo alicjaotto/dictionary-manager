@@ -37,6 +37,7 @@ export class SingleRow extends Component {
   }
 
   handleSaveAction(event) {
+    this.props.sendNewRow(this.state.domain, this.state.range, this.state.id);
     this.setState({
       editable: false,
       editDisabled: false
@@ -90,6 +91,7 @@ export class SingleRow extends Component {
         )}
         <td>
           <ButtonToolbar>
+          {!editable && (
             <Button
               onClick={this.handleEditAction}
               size='sm'
@@ -98,14 +100,19 @@ export class SingleRow extends Component {
               disabled={editDisabled}>
               Edit
             </Button>
+            )
+          }
+          {editable && (
             <Button
               onClick={this.handleSaveAction}
               size='sm'
               value='save'
-              variant='primary'
+              variant='success'
               disabled={!editDisabled}>
-              Save
+              Done
             </Button>
+            )
+          }
             <Button
               onClick={this.handleRemoveAction}
               size='sm'

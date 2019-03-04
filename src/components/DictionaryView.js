@@ -9,6 +9,8 @@ export class DictionaryView extends Component {
 
     this.handleAddRowAction = this.handleAddRowAction.bind(this);
     this.handleRemoveRowAction = this.handleRemoveRowAction.bind(this);
+    this.handleSaveNewRow = this.handleSaveNewRow.bind(this);
+    this.handleSaveChangesAction = this.handleSaveChangesAction.bind(this);
 
     this.state = {
       activeDictionary: this.props.activeDictionary,
@@ -22,7 +24,7 @@ export class DictionaryView extends Component {
     newDictionary.push(newRow);
     this.setState({
       activeDictionary: newDictionary
-    });
+    }, () => console.log(this.state));
   }
 
   handleRemoveRowAction(id) {
@@ -33,9 +35,23 @@ export class DictionaryView extends Component {
     });
   }
 
+  handleSaveNewRow(domain, range, id) {
+    const row = this.state.activeDictionary[id];
+    row[0] = domain;
+    row[1] = range;
+  }
+
+  handleSaveChangesAction() {
+    var dict = this.state.activeDictionary;
+    const result = dict.reduce(function(map, arr) {
+      map[arr[0]] = arr[1];
+      return map;
+    }, {});
+    this.props.sendChangedDictionary(result);
+  }
+
   render() {
     var activeDictionary = this.props.activeDictionary;
-    var {newDictionary} = this.props.newDictionary;
     var rows = activeDictionary.map((item, index) => {
       const domain = item[0];
       const range = item[1];
@@ -47,15 +63,16 @@ export class DictionaryView extends Component {
           domain={domain}
           range={range}
           sendRowToRemoveId={this.handleRemoveRowAction}
-          sendRowData={this.handleRowData}/>
+          sendRowData={this.handleRowData}
+          sendNewRow={this.handleSaveNewRow}/>
       )
     });
+    const tableVisible = (activeDictionary.length >= 1) ? true : false;
 
     return (
       <div className='Dictionary-view'>
-        {!newDictionary &&
-          (
             <Table striped bordered size='sm'>
+            {tableVisible && (
               <thead>
                 <tr>
                   <th>Domain</th>
@@ -63,18 +80,23 @@ export class DictionaryView extends Component {
                   <th>Actions</th>
                 </tr>
               </thead>
+            )}
               <tbody>
                 {rows}
               </tbody>
             </Table>
-          )
-        }
         <ButtonToolbar>
           <Button
             value='addRow'
             variant='secondary'
             onClick={this.handleAddRowAction}>
             Add row
+          </Button>
+          <Button
+            value='save'
+            variant='primary'
+            onClick={this.handleSaveChangesAction}>
+            Save changes
           </Button>
         </ButtonToolbar>
       </div>

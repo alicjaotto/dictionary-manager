@@ -1,22 +1,41 @@
-.App {
-
-}
-
 .App-header {
   background-color: #282c34;
-  min-height: 10vh;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  justify-content: center;
+  min-height: 5rem;
   color: white;
-  padding: 0 2rem;
+  padding: 0 4rem;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.App-menu {
+  height: 100%;
+}
+
+.App-menu-nav {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  margin: 0;
+}
+
+.App-menu-nav-link {
+  margin-left: 0.6rem;
+  color: #007bff;
+}
+
+.App-menu-nav-link:hover {
+  color: #0069d9;
+  text-decoration: none;
+  cursor: pointer;
 }
 
 .App-title {
   font-size: 2rem;
   font-weight: normal;
   margin-bottom: 0;
+  height: 100%;
 }
 
 .Dictionary-list {
@@ -41,15 +60,42 @@
 }
 
 .Dictionary-list-item[disabled] {
-  cursor: not-allowed;
+  cursor: default;
 }
 
 .Dictionary-list-item[disabled]:hover {
   background-color: #fff;
+  color: default;
 }
 
 .Dictionary-view {
   margin-top: 1rem;
+}
+
+.Dictionary-view th:first-child {
+  width: 40%;
+}
+
+.Dictionary-view th:nth-child(2) {
+  width: 40%;
+}
+
+.Dictionary-view th:last-child {
+  width: 20%;
+}
+
+.Dictionary-view-alert {
+  margin-top: 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.Dictionary-view-alert-button {
+  cursor: pointer;
+  font-weight: bold;
+  margin-left: 1rem;
+  font-size: 1.2rem;
 }
 
 .active {
@@ -58,5 +104,5 @@
 }
 
 .btn-toolbar .btn {
-  margin-right: 0.5rem;
+  margin-right: 0.3rem;
 }
