@@ -153,9 +153,9 @@ export class NewDictionary extends Component {
               <span>
                 You cannot save dictionary without title and id!
               </span>
-              <span className='Dictionary-view-alert-button' type='button' onClick={handleHide}>
+              <button className='Dictionary-view-alert-button' type='button' onClick={handleHide}>
                 x
-              </span>
+              </button>
             </Alert>
           </div>
       </div>

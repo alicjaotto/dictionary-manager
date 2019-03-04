@@ -2,6 +2,8 @@
   margin: 0;
   padding: 0;
   list-style-type: none;
+  border: none;
+  outline: none;
 }
 
 body {
@@ -17,7 +19,12 @@ code {
     monospace;
 }
 
-[type='button'],
-[type='button']:hover {
+button {
+  background: none;
+}
+
+button,
+button:focus {
   -webkit-appearance: none;
+  outline: none;
 }

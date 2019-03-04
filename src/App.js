@@ -83,9 +83,15 @@ class App extends Component {
     return (
       <div className='App'>
         <header className='App-header'>
-          <h1 className='App-title'>dictionary manager</h1>
+          <div className='App-title-wrapper'>
+            <h1 className='App-title'>dictionary
+              <span className='App-title-thiner'>manager</span>
+            </h1>
+            <span className='App-title-version'>v. 1.3.3</span>
+          </div>
           <nav className='App-menu'>
             <ul className='App-menu-nav'>
+              <li className='App-menu-nav-link'>about</li>
               <li className='App-menu-nav-link'>support</li>
               <li className='App-menu-nav-link'>log out</li>
             </ul>
@@ -108,7 +114,7 @@ class App extends Component {
                   size='lg'
                   block
                   onClick={this.addDictionary}>
-                  new dictionary
+                  + new dictionary
                 </Button>
               </div>
             </Col>

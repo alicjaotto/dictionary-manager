@@ -37,12 +37,12 @@ export class DictionaryList extends Component {
       const list_id = 'list-' + dictionary.id;
 
       return(
-        <li key={list_id}>
+        <li key={list_id} className='Dictionary-list-item'>
           <button
             type='button'
             disabled={this.props.disabled}
             ref={list_id}
-            className='Dictionary-list-item' onClick={(event) => this.showDictionary(dictionary.id)}>
+            onClick={(event) => this.showDictionary(dictionary.id)}>
             {name}
           </button>
         </li>
@@ -50,9 +50,12 @@ export class DictionaryList extends Component {
     });
 
     return (
-      <ul className='Dictionary-list'>
-        {dictionaries_values}
-      </ul>
+      <div className='Dictionary-list'>
+        <div className='Dictionary-list-title'>available dictionaries</div>
+        <ul className='Dictionary-list-items'>
+          {dictionaries_values}
+        </ul>
+      </div>
     )
   }
 }

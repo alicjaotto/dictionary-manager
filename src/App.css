@@ -1,5 +1,5 @@
 .App-header {
-  background-color: #282c34;
+  background-color: #192d46;
   min-height: 5rem;
   color: white;
   padding: 0 4rem;
@@ -21,14 +21,21 @@
 }
 
 .App-menu-nav-link {
-  margin-left: 0.6rem;
+  margin-left: 1rem;
   color: #007bff;
+  text-transform: uppercase;
+  font-size: 0.8rem;
 }
 
 .App-menu-nav-link:hover {
   color: #0069d9;
   text-decoration: none;
   cursor: pointer;
+}
+
+.App-title-wrapper {
+  display: flex;
+  align-items: baseline;
 }
 
 .App-title {
@@ -38,38 +45,76 @@
   height: 100%;
 }
 
+.App-title::before {
+  content: '■';
+  font-size: 4rem;
+  margin-right: 0.5rem;
+  margin-top: -1rem;
+  color: #007bff;
+  vertical-align: middle;
+  display: inline-block;
+}
+
+.App-title-thiner {
+  font-weight: lighter;
+  margin-left: 0.4rem;
+}
+
+.App-title-version {
+  font-weight: lighter;
+  color: #007bff;
+  font-size: 0.8rem;
+  margin-left: 0.6rem;
+}
+
 .Dictionary-list {
+  color: #212529;
+}
+
+.Dictionary-list-title {
+  text-transform: uppercase;
+  font-size: 1.2rem;
+  font-weight: lighter;
+  margin: 1rem 0;
+  color: #48494a;
+}
+
+.Dictionary-list-items {
   width: 100%;
   list-style-type: none;
   margin-bottom: 1rem;
+  display: flex;
+  flex-flow: column;
 }
 
 .Dictionary-list-item {
   padding: .75rem 1.25rem;
   margin-bottom: -1px;
-  border: 1px solid rgba(0,0,0,.125);
+  border-top: 1px solid rgba(0,0,0,.125);
   background-color: #fff;
   display: block;
   width: 100%;
+  font-weight: bold;
+  text-align: left;
+  color: #48494a;
 }
 
-.Dictionary-list-item:hover {
+.Dictionary-list-item button {
+  background-color: none;
+}
+
+.Dictionary-list-item button:hover {
   cursor: pointer;
-  background-color: #dee2e6;
-  color: #212529;
+  color: #007bff;
 }
 
-.Dictionary-list-item[disabled] {
+.Dictionary-list-item button[disabled]:hover {
   cursor: default;
-}
-
-.Dictionary-list-item[disabled]:hover {
-  background-color: #fff;
-  color: default;
+  color: #808080;
 }
 
 .Dictionary-view {
-  margin-top: 1rem;
+  margin-top: 3.6rem;
 }
 
 .Dictionary-view th:first-child {
@@ -96,11 +141,25 @@
   font-weight: bold;
   margin-left: 1rem;
   font-size: 1.2rem;
+  color: inherit;
 }
 
 .active {
-  background-color: #6c757d;
-  color: white;
+  color: #007bff;
+}
+
+.active::before {
+  content: '■';
+  font-size: 1.4rem;
+  color: #007bff;
+  margin-right: 0.6rem;
+  display: inline-block;
+  vertical-align: middle;
+  margin-top: -0.4rem;
+}
+
+.btn {
+  border-radius: 0;
 }
 
 .btn-toolbar .btn {
